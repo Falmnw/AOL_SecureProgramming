@@ -75,11 +75,10 @@
                         </span>
                         <span class="checkbox-label">Remember me</span>
                     </label>
-                    <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="signin-button">
-                    <span class="button-text">Sign In</span>
+                    <span class="button-text">Register</span>
                     <div class="button-loader">
                         <div class="loader-circle"></div>
                     </div>

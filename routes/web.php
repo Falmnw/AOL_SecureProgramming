@@ -51,6 +51,10 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+Route::get('/forgotpassword', function() {
+    return view('forgotpassword');
+})->name('forgotpassword');
+
 Route::post('/logout', function (Request $request) {
     Auth::logout();
     $request->session()->invalidate();

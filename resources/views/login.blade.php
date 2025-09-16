@@ -47,7 +47,7 @@
                         </span>
                         <span class="checkbox-label">Remember me</span>
                     </label>
-                    <a href="#" class="forgot-password">Forgot password?</a>
+                    <a href="{{ route('forgotpassword') }}" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="signin-button">
