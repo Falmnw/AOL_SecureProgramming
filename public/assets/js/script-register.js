@@ -12,7 +12,7 @@ class ElegantPortfolioRegisterForm {
         this.successMessage = document.getElementById('successMessage');
         this.socialButtons = document.querySelectorAll('.social-button');
 
-        this.init();
+        this.init();    
     }
 
     init() {
