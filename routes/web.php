@@ -60,9 +60,6 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
-<<<<<<< HEAD
-
-=======
 Route::get('/register', function () {
     return view('register');
 })->name('register');
@@ -85,4 +82,3 @@ Route::post('/logout', function (Request $request) {
     $request->session()->regenerateToken();
     return redirect('/login');
 })->name('logout');
->>>>>>> d3b506a80d890c2be543a5bdc4e004aa13d6848a
