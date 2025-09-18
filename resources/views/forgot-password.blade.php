@@ -16,7 +16,7 @@
 
             <form class="forgotpasswordform" id="forgotpasswordform" novalidate>
                 <div class="form-field">
-                    <input type="email" id="email" name="email" required autocomplete="email">
+                    <input type="password" id="email" name="email" required autocomplete="email">
                     <label for="email">Email Address</label>
                     <div class="field-line"></div>
                     <span class="error-message" id="emailError"></span>
