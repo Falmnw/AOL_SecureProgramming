@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Login')
+@section('title', 'Change password')
 
 @section('content')
     <div class="login-container">
@@ -10,22 +10,15 @@
                 <div class="logo">
                     <img src="{{ asset('assets/images/logo-apk-simple.png') }}" alt="logo apk simple" class="logo-apk">
                 </div>
-                <h1>Login</h1>
-                <p>Sign in to your account</p>
+                <h1>Change password</h1>
+                <p>Input new password</p>
             </div>
 
-            <form class="login-form" id="loginForm" novalidate>
+            <form class="changepasswordform" id="changepasswordform" novalidate>
                 <div class="form-field">
-                    <input type="email" id="email" name="email" required autocomplete="email">
-                    <label for="email">Email Address</label>
-                    <div class="field-line"></div>
-                    <span class="error-message" id="emailError"></span>
-                </div>
-
-                <div class="form-field">
-                    <input type="password" id="password" name="password" required autocomplete="current-password">
-                    <label for="password">Password</label>
-                    <button type="button" class="password-reveal" id="passwordToggle" aria-label="Toggle password visibility">
+                    <input type="password" id="newPassword" name="password" required autocomplete="new-password">
+                    <label for="password">New password</label>
+                    <button type="button" class="password-reveal" id="newPasswordToggle" aria-label="Toggle password visibility">
                         <svg class="eye-show" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M10 4C5.5 4 1.7 7.3 1 10c.7 2.7 4.5 6 9 6s8.3-3.3 9-6c-.7-2.7-4.5-6-9-6zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z" fill="currentColor"/>
                         </svg>
@@ -34,45 +27,31 @@
                         </svg>
                     </button>
                     <div class="field-line"></div>
-                    <span class="error-message" id="passwordError"></span>
+                    <span class="error-message" id="newPasswordError"></span>
                 </div>
 
-                <div class="form-actions">
-                    <label class="remember-checkbox">
-                        <input type="checkbox" id="remember" name="remember">
-                        <span class="checkbox-custom">
-                            <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                                <path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <span class="checkbox-label">Remember me</span>
-                    </label>
-                    <a href="{{ route('forgot-password') }}" class="forgot-password">Forgot password?</a>
+                <div class="form-field">
+                    <input type="password" id="passwordConfirmation" name="password_confirmation" required autocomplete="new-password">
+                    <label for="password">Re enter password</label>
+                    <button type="button" class="password-reveal" id="passwordConfirmationToggle" aria-label="Toggle password visibility">
+                        <svg class="eye-show" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 4C5.5 4 1.7 7.3 1 10c.7 2.7 4.5 6 9 6s8.3-3.3 9-6c-.7-2.7-4.5-6-9-6zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z" fill="currentColor"/>
+                        </svg>
+                        <svg class="eye-hide" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3 3l14 14m-7-7a2 2 0 01-2-2m2 2a2 2 0 002 2m-2-2v.01M10 6a4 4 0 014 4m-4-4a4 4 0 00-4 4m4-4V4m0 10v2m4-6c.7-2.7-3.3-6-8-6m8 6c-.7 2.7-4.5 6-9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="field-line"></div>
+                    <span class="error-message" id="passwordConfirmationError"></span>
                 </div>
 
                 <button type="submit" class="signin-button">
-                    <span class="button-text">Sign In</span>
+                    <span class="button-text">Save</span>
                     <div class="button-loader">
                         <div class="loader-circle"></div>
                     </div>
                 </button>
             </form>
-
-            <div class="auth-divider">
-                <span>or continue with</span>
-            </div>
-
-            <div class="social-auth">
-                <a href="{{ url('/auth/redirect') }}" class="social-button google">
-                    <img src="{{ asset('assets/images/logo-google.png') }}" alt="logo google" class="google-icon">
-                    <span>Google</span>
-                </a>
-            </div>
-
-            <div class="signup-prompt">
-                <span>New to the platform? </span>
-                <a href="{{ route('register') }}" class="signup-link">Create new account</a>
-            </div>
 
             <div class="success-state" id="successMessage">
                 <div class="success-visual">
@@ -94,5 +73,5 @@
     </div>
 
     <script src="../../shared/js/form-utils.js"></script>
-    <script src="{{ asset('assets/js/script-login.js') }}"></script>
+    <script src="{{ asset('assets/js/script-changepassword.js') }}"></script>
 @endsection

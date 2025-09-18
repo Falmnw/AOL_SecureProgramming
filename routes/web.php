@@ -60,4 +60,29 @@ Route::get('/login', function () {
     return view('login');
 })->name('login');
 
+<<<<<<< HEAD
 
+=======
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+Route::get('/forgot-password', function() {
+    return view('forgot-password');
+})->name('forgot-password');
+
+Route::get('/change-password', function() {
+    return view('change-password');
+})->name('change-password');
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
+>>>>>>> d3b506a80d890c2be543a5bdc4e004aa13d6848a
