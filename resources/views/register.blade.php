@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('title', 'Login')
+@section('title', 'Register')
 
 @section('content')
     <div class="login-container">
@@ -10,11 +10,45 @@
                 <div class="logo">
                     <img src="{{ asset('assets/images/logo-apk-simple.png') }}" alt="logo apk simple" class="logo-apk">
                 </div>
-                <h1>Login</h1>
-                <p>Sign in to your account</p>
+                <h1>Register</h1>
+                <p>Register new account</p>
             </div>
 
-            <form class="login-form" id="loginForm" novalidate>
+            <form class="register-form" id="registerForm" novalidate>
+                <div class="form-field">
+                    <input type="number" id="nim" name="nim" required autocomplete="nim">
+                    <label for="nama">NIM</label>
+                    <div class="field-line"></div>
+                    <span class="error-message" id="nimError"></span>
+                </div>
+
+                 <div class="form-field">
+                    <input type="text" id="nama" name="nama" required autocomplete="nama">
+                    <label for="nama">Nama</label>
+                    <div class="field-line"></div>
+                    <span class="error-message" id="namaError"></span>
+                </div>
+
+                <div class="form-field">
+                    <input type="text" id="daerah" name="daerah" required autocomplete="daerah">
+                    <label for="nama">Daerah</label>
+                    <div class="field-line"></div>
+                    <span class="error-message" id="daerahError"></span>
+                </div>
+
+                <div class="form-field">
+                    <select id="organisasi" name="organisasi" required>
+                        <option value="" disabled selected>Pilih Organisasi</option>
+                        <option value="BEM">BEM</option>
+                        <option value="HIMTI">HIMTI</option>
+                        <option value="MAPALA">MAPALA</option>
+                        <option value="UKM Musik">UKM Musik</option>
+                    </select>
+                    <label for="organisasi">Organisasi Kemahasiswaan</label>
+                    <div class="field-line"></div>
+                    <span class="error-message" id="organisasiError"></span>
+                </div>
+
                 <div class="form-field">
                     <input type="email" id="email" name="email" required autocomplete="email">
                     <label for="email">Email Address</label>
@@ -47,11 +81,10 @@
                         </span>
                         <span class="checkbox-label">Remember me</span>
                     </label>
-                    <a href="{{ route('forgot-password') }}" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="signin-button">
-                    <span class="button-text">Sign In</span>
+                    <span class="button-text">Register</span>
                     <div class="button-loader">
                         <div class="loader-circle"></div>
                     </div>
@@ -70,8 +103,8 @@
             </div>
 
             <div class="signup-prompt">
-                <span>New to the platform? </span>
-                <a href="{{ route('register') }}" class="signup-link">Create new account</a>
+                <span>Already have an account? </span>
+                <a href="{{ route('login') }}" class="signup-link">Login</a>
             </div>
 
             <div class="success-state" id="successMessage">
@@ -94,5 +127,5 @@
     </div>
 
     <script src="../../shared/js/form-utils.js"></script>
-    <script src="{{ asset('assets/js/script-login.js') }}"></script>
+    <script src="{{ asset('assets/js/script-register.js') }}"></script>
 @endsection
