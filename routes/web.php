@@ -57,11 +57,11 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('auth.login');
 })->name('login');
 
 Route::get('/register', function () {
-    return view('register');
+    return view('auth.register');
 })->name('register');
 
 Route::get('/home', function () {
@@ -69,11 +69,11 @@ Route::get('/home', function () {
 })->name('home');
 
 Route::get('/forgot-password', function() {
-    return view('forgot-password');
+    return view('auth.forgot-password');
 })->name('forgot-password');
 
 Route::get('/change-password', function() {
-    return view('change-password');
+    return view('auth.change-password');
 })->name('change-password');
 
 Route::post('/logout', function (Request $request) {

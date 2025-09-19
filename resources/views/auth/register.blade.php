@@ -38,11 +38,10 @@
 
                 <div class="form-field">
                     <select id="organisasi" name="organisasi" required>
-                        <option value="" disabled selected>Pilih Organisasi</option>
-                        <option value="BEM">BEM</option>
-                        <option value="HIMTI">HIMTI</option>
-                        <option value="MAPALA">MAPALA</option>
-                        <option value="UKM Musik">UKM Musik</option>
+                        <option value="">-</option>
+                        <option value="BEM">BNCC</option>
+                        <option value="HIMA">HIMTI</option>
+                        <option value="UKM">CSC</option>
                     </select>
                     <label for="organisasi">Organisasi Kemahasiswaan</label>
                     <div class="field-line"></div>
