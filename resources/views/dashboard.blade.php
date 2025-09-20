@@ -21,7 +21,5 @@
 </form>
 
 <a href="/list-organization">list organization</a>
-<a href="{{ route('candidate.want') }}">i want to be candidate</a>
-
 
 

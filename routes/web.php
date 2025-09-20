@@ -46,8 +46,12 @@ Route::middleware('auth')->group(function (){
     Route::get('/organization/{id}/store-email',[AllowedMemberController::class, 'show'])->name('organization.store-email');
     Route::post('/organization/{id}/store-email',[AllowedMemberController::class, 'store'])->name('organization.store-email');
     Route::get('/organization/{id}/store-candidate',[CandidateController::class, 'show'])->name('organization.store-candidate');
-    Route::post('/organization/{id}/store-candidate',[CandidateController::class, 'store'])->name('organization.store-candidate');
+    Route::post('/organization/{id}/store-candidate',[CandidateController::class, 'storeCandidate'])->name('organization.store-candidate');
     Route::post('/organization/{id}/store-vote',[CandidateController::class, 'storeVote'])->name('organization.store-vote');
+    Route::get('/organization/{id}/create-session',[CandidateController::class, 'createSession'])->name('organization.create-session');
+    Route::post('/organization/{id}/create-session',[CandidateController::class, 'storeSession'])->name('organization.create-session');
+    Route::get('/organization/{id}/show-session',[CandidateController::class, 'showSession'])->name('organization.show-session');
+    Route::get('/organization/{id}/delete-session',[CandidateController::class, 'deleteSession'])->name('organization.delete-session');
     Route::get('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();

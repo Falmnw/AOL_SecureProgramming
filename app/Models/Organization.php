@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Organization extends Model
 {
@@ -20,6 +21,12 @@ class Organization extends Model
     public function candidates()
     {
         return $this->hasMany(Candidate::class);
+    }
+
+    public function getRoleUser(){
+        $user_id =  Auth::user()->id;
+        $role = $this->users()->where('user_id', $user_id)->first()->pivot->role->name;
+        return $role;
     }
 
     public function votes()
