@@ -31,9 +31,9 @@
                 </div>
 
                 <div class="form-field">
-                    <input type="password" id="passwordConfirmation" name="password_confirmation" required autocomplete="new-password">
+                    <input type="password" id="newPasswordConfirmation" name="new_password_confirmation" required autocomplete="new-password">
                     <label for="password">Re enter password</label>
-                    <button type="button" class="password-reveal" id="passwordConfirmationToggle" aria-label="Toggle password visibility">
+                    <button type="button" class="password-reveal" id="newPasswordConfirmationToggle" aria-label="Toggle password visibility">
                         <svg class="eye-show" width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M10 4C5.5 4 1.7 7.3 1 10c.7 2.7 4.5 6 9 6s8.3-3.3 9-6c-.7-2.7-4.5-6-9-6zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z" fill="currentColor"/>
                         </svg>

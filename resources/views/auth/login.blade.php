@@ -14,7 +14,8 @@
                 <p>Sign in to your account</p>
             </div>
 
-            <form class="login-form" id="loginForm" novalidate>
+            <form action="{{ route('login.post') }}" class="login-form" id="loginForm" novalidate method="post">
+                @csrf
                 <div class="form-field">
                     <input type="email" id="email" name="email" required autocomplete="email">
                     <label for="email">Email Address</label>

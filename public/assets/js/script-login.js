@@ -24,7 +24,6 @@ class ElegantPortfolioLoginForm {
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
 
-        // Add placeholder attribute for label animations
         this.emailInput.setAttribute('placeholder', ' ');
         this.passwordInput.setAttribute('placeholder', ' ');
     }
@@ -115,13 +114,38 @@ class ElegantPortfolioLoginForm {
         this.setLoading(true);
 
         try {
-            // Simulate authentication
-            await new Promise(resolve => setTimeout(resolve, 2200));
+            const formData = new FormData(this.form);
 
-            // Show success
-            this.showSuccess();
+            const response = await fetch(this.form.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                this.showSuccess();
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/dashboard';
+                }, 2000);
+            } else {
+                this.showError('password', data.message || 'Login failed');
+            }
         } catch (error) {
-            this.showError('password', 'Authentication failed. Please try again.');
+            console.error('Login error:', error);
+            if (error instanceof SyntaxError) {
+                console.log('Server redirected - login successful');
+                this.showSuccess();
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 1000);
+            } else {
+                this.showError('password', 'Network error. Please try again.');
+            }
         } finally {
             this.setLoading(false);
         }
@@ -130,7 +154,6 @@ class ElegantPortfolioLoginForm {
     async handleSocialLogin(provider, button) {
         console.log(`Signing in with ${provider}...`);
 
-        // Simple loading state
         const originalHTML = button.innerHTML;
         button.style.pointerEvents = 'none';
         button.style.opacity = '0.7';
@@ -141,14 +164,12 @@ class ElegantPortfolioLoginForm {
 
         try {
             await new Promise(resolve => setTimeout(resolve, 1800));
-            console.log(`Redirecting to ${provider} authentication...`);
-            // window.location.href = `/auth/${provider.toLowerCase()}`;
+            window.location.href = '/auth/redirect';
         } catch (error) {
             console.error(`${provider} sign in failed: ${error.message}`);
-        } finally {
+            button.innerHTML = originalHTML;
             button.style.pointerEvents = 'auto';
             button.style.opacity = '1';
-            button.innerHTML = originalHTML;
         }
     }
 
@@ -156,7 +177,6 @@ class ElegantPortfolioLoginForm {
         this.submitButton.classList.toggle('loading', loading);
         this.submitButton.disabled = loading;
 
-        // Disable social buttons during loading
         this.socialButtons.forEach(button => {
             button.style.pointerEvents = loading ? 'none' : 'auto';
             button.style.opacity = loading ? '0.6' : '1';
@@ -164,30 +184,19 @@ class ElegantPortfolioLoginForm {
     }
 
     showSuccess() {
-        // Hide form with smooth transition
         this.form.style.transform = 'scale(0.95)';
         this.form.style.opacity = '0';
 
         setTimeout(() => {
             this.form.style.display = 'none';
-            document.querySelector('.social-auth').style.display = 'none';
-            document.querySelector('.signup-prompt').style.display = 'none';
-            document.querySelector('.auth-divider').style.display = 'none';
+            const elementsToHide = document.querySelectorAll('.social-auth, .signup-prompt, .auth-divider');
+            elementsToHide.forEach(el => el.style.display = 'none');
 
-            // Show success message
             this.successMessage.classList.add('show');
-
         }, 300);
-
-        // Redirect after success display
-        setTimeout(() => {
-            console.log('Redirecting to your creative dashboard...');
-            // window.location.href = '/dashboard';
-        }, 3000);
     }
 }
 
-// Initialize the form when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new ElegantPortfolioLoginForm();
 });

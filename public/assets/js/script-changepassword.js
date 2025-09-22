@@ -2,9 +2,9 @@ class ElegantPortfolioChangePasswordForm {
     constructor() {
         this.form = document.getElementById('changepasswordform');
         this.newPasswordInput = document.getElementById('newPassword');
-        this.passwordConfirmationInput = document.getElementById('passwordConfirmation');
+        this.passwordConfirmationInput = document.getElementById('newPasswordConfirmation');
         this.newPasswordToggle = document.getElementById('newPasswordToggle');
-        this.passwordConfirmationToggle = document.getElementById('passwordConfirmationToggle');
+        this.passwordConfirmationToggle = document.getElementById('newPasswordConfirmationToggle');
         this.submitButton = this.form.querySelector('.signin-button');
         this.successMessage = document.getElementById('successMessage');
 
