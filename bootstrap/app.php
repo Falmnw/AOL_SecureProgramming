@@ -15,6 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => \App\Http\Middleware\AuthMiddleware::class,
         ]);
     })
+
+    //Penambahan trust Host
+    ->withMiddleware(function (Middleware $middleware) {
+    $middleware->trustHosts(at: ['laravel.test']);
+})
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
