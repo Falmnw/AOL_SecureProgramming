@@ -5,6 +5,10 @@ use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\Dashboard;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -68,7 +72,7 @@ Route::middleware('auth')->group(function (){
     //     return redirect('/login');
     // })->name('logout');
 
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
+    //Route::get('/logout', [AuthController::class, 'logout'])->name('logout.get');
 
 });
 
@@ -86,20 +90,76 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('forgot-password');
+//Route::get('/forgot-password', [AuthController::class, 'showForgotPassword'])->name('forgot-password');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-Route::get('/forgot-password', function() {
-    return view('auth.forgot-password');
-})->name('forgot-password');
+//Route::get('/forgot-password', function() {
+    //return view('auth.forgot-password');
+//})->name('forgot-password');
 
 Route::get('/change-password', function() {
     return view('auth.change-password');
 })->name('change-password');
+
+
+// Penambahan Route untuk reset password
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+ 
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+ 
+    return $status === Password::ResetLinkSent
+        ? back()->with(['status' => __($status)])
+        : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+// Reset
+Route::get('/reset-password/{token}', function (string $token) {
+    return view('auth.reset-password', ['token' => $token]);
+})->middleware('guest')->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+    $request->validate([
+        'token' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function (User $user, string $password) {
+            $user->forceFill([
+                'password' => Hash::make($password)
+            ])->setRememberToken(Str::random(60));
+
+            $user->save();
+
+            event(new PasswordReset($user));
+        }
+    );
+
+    if ($status === Password::PASSWORD_RESET) {
+        return back()->with('status', __($status));
+    }
+
+    return back()->withErrors(['email' => [__($status)]]);
+})->middleware('guest')->name('password.update');
+
+// sampai sini
+
+
+
+
 
 // Route::post('/logout', function (Request $request) {
 //     Auth::logout();
