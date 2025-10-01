@@ -15,8 +15,9 @@
             </div>
 
             <form class="forgotpasswordform" id="forgotpasswordform" novalidate>
+                @csrf
                 <div class="form-field">
-                    <input type="password" id="email" name="email" required autocomplete="email">
+                    <input type="email" id="email" name="email" required autocomplete="email">
                     <label for="email">Email Address</label>
                     <div class="field-line"></div>
                     <span class="error-message" id="emailError"></span>
@@ -43,8 +44,8 @@
                         </defs>
                     </svg>
                 </div>
-                <h3>Welcome back!</h3>
-                <p>Taking you to your creative dashboard...</p>
+                <h3>Email sent!</h3>
+                {{-- <p>Taking you to your creative dashboard...</p> --}}
             </div>
         </div>
     </div>
