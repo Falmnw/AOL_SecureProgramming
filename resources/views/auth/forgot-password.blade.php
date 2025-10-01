@@ -1,55 +1,45 @@
 @extends('layout.master')
-@section('title', 'Forgot password')
+
+@section('title', 'Forgot Password')
 
 @section('content')
     <div class="login-container">
         <div class="login-card">
-            <div class="card-accent"></div>
-
             <div class="login-header">
                 <div class="logo">
                     <img src="{{ asset('assets/images/logo-apk-simple.png') }}" alt="logo apk simple" class="logo-apk">
                 </div>
-                <h1>Forgot password?</h1>
-                <p>Input email to reset your password</p>
+                <h1>Forgot Password?</h1>
+                <p>Input email to reset your password.</p>
             </div>
 
-            <form class="forgotpasswordform" id="forgotpasswordform" novalidate>
+            {{-- Success Message --}}
+            @if (session('status'))
+                <div style="padding:10px; margin-bottom:10px; border:1px solid green; border-radius:5px; color:green; background:#eaffea;">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            {{-- Error --}}
+            @if ($errors->any())
+                <div style="padding:10px; margin-bottom:10px; border:1px solid red; border-radius:5px; color:red; background:#ffeaea;">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}">
                 @csrf
+
                 <div class="form-field">
-                    <input type="email" id="email" name="email" required autocomplete="email">
+                    <input type="email" name="email" id="email" required autofocus>
                     <label for="email">Email Address</label>
                     <div class="field-line"></div>
-                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <button type="submit" class="signin-button">
-                    <span class="button-text">Send email</span>
-                    <div class="button-loader">
-                        <div class="loader-circle"></div>
-                    </div>
+                    <span class="button-text">Confirm</span>
                 </button>
             </form>
-
-            <div class="success-state" id="successMessage">
-                <div class="success-visual">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <circle cx="20" cy="20" r="20" fill="url(#successGradient)"/>
-                        <path d="M12 20l6 6 10-10" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <defs>
-                            <linearGradient id="successGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#4ECDC4"/>
-                                <stop offset="100%" stop-color="#44A08D"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                </div>
-                <h3>Email sent!</h3>
-                {{-- <p>Taking you to your creative dashboard...</p> --}}
-            </div>
         </div>
     </div>
-
-    <script src="../../shared/js/form-utils.js"></script>
-    <script src="{{ asset('assets/js/script-forgotpassword.js') }}"></script>
 @endsection
