@@ -16,7 +16,7 @@ class CandidateController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        $roleName = OrganizationUser::where('organization_id', $id)->first()->getRoleUser();
+        $roleName = OrganizationUser::where('organization_id', $id)->where('user_id', $user->id)->first()->getRoleUser();
         if ($roleName !== 'Admin') {
             abort(403, 'Unauthorized access');
         } 
@@ -29,12 +29,32 @@ class CandidateController extends Controller
     }
     public function storeSession(Request $request,$id){
         $this->getAuthorizedOrganization($id);
-        // $request->validate([
-        //     'title' => 'required|string',
-        //     'start_time' => 'required|date|after_or_equal:now',
-        //     'end_time' => 'required|date|after:start_time',
-        // ]);
+        $request->validate([
+            'title' => 'required|string',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after:start_time',
+            'user_id' => 'required|array|min:1',
+        ]);
+        $organization = Organization::findOrFail($id);
+        $validated = $request->validate([
+            'user_id' => 'required|array|min:1',
+            'user_id.*' => 'exists:users,id',
+        ]);
+        foreach ($validated['user_id'] as $uid) {
+            if (!$organization->users()->where('id', $uid)->exists()) {
+                abort(403, 'User is not part of this organization.');
+            }
 
+            Candidate::firstOrCreate(
+                [
+                    'user_id' => $uid,
+                    'organization_id' => $organization->id,
+                ],
+                [
+                    'total' => 0,
+                ]
+            );
+        }
         buat_sesi::create([
             'title' => $request->title,
             'organization_id' => $id,
@@ -70,13 +90,20 @@ class CandidateController extends Controller
 
     public function storeCandidate(Request $request, $id){
         $this->getAuthorizedOrganization($id);
-        $user_id = $request->input('user_id');
-        $organization_id = $request->input('organization_id');
-        foreach($user_id as $uid){
+        $organization = Organization::findOrFail($id);
+        $validated = $request->validate([
+            'user_id' => 'required|array|min:1',
+            'user_id.*' => 'exists:users,id',
+        ]);
+        foreach ($validated['user_id'] as $uid) {
+            if (!$organization->users()->where('id', $uid)->exists()) {
+                abort(403, 'User is not part of this organization.');
+            }
+
             Candidate::firstOrCreate(
                 [
                     'user_id' => $uid,
-                    'organization_id' => $organization_id,
+                    'organization_id' => $organization->id,
                 ],
                 [
                     'total' => 0,
