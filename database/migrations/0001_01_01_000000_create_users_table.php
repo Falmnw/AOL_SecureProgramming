@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('nim')->unique();
             $table->string('name');
             $table->string('daerah');
-            $table->string('organisasi_kemahasiswaan');
+            // $table->string('organisasi_kemahasiswaan');
             $table->string('email')->unique();
-            $table->string('password');
             $table->string('google_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function (){
     Route::get('/organization/{id}/store-candidate',[CandidateController::class, 'show'])->name('organization.store-candidate');
     Route::post('/organization/{id}/store-candidate',[CandidateController::class, 'store'])->name('organization.store-candidate');
     Route::post('/organization/{id}/store-vote',[CandidateController::class, 'storeVote'])->name('organization.store-vote');
+    Route::get('/organization/{id}/winner',[CandidateController::class, 'winner'])->name('organization.winner');
+
     Route::get('/logout', function (Request $request) {
         Auth::logout();
         $request->session()->invalidate();

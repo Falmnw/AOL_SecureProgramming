@@ -69,14 +69,24 @@ class CandidateController extends Controller
                             ->with('error', 'Anda sudah vote');
         }
 
-
+        
         Vote::create([
             'user_id' => $user_id,
             'organization_id' => $organization_id,
         ]);
+        
+        
         $candidate = Candidate::where('user_id', $candidate_id)->where('organization_id', $organization_id)->first();
         $candidate->total += 1;
         $candidate->save();
         return redirect('/');
     }
+    
+    public function winner($organization_id){
+            $winner = Candidate::where('organization_id',$organization_id)->orderByDesc('total')->first();
+            if(!$winner){
+                return redirect()->back()->with('error','No candidates or Votes yet');
+            }
+            return view('winnerPage',compact('winner'));
+        }
 }
